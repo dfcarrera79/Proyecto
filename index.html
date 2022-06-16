@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Pico y Placa checker</h1>
+
+    <div id="app">
+        <div>
+            <input type="text" placeholder="Enter the license plate without a hyphen" v-model="plate"
+                style="width:100px" required><br>
+            <input type="date" placeholder="Enter the date" v-model="plate" style="width:date" style="width:103px"
+                required><br>
+            <input type="time" placeholder="Enter the time" v-model="time" style="width:103px" required><br><br>
+            <button @click="be_on_road()" style="width:103px">CHECK</button><br><br>
+            <h3>{{ message }}</h3>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue
+        createApp({
+            data() {
+                return {
+                    plate: '',
+                    date: '2022-06-15',
+                    time: '18:00',
+                    message: '',
+                }
+            },
+            methods: {
+                async be_on_road() {
+                    if (this.plate.trim().length === 0) {
+                        alert('It is necessary to enter the plate number');
+                        return;
+                    }
+                    fetch(`http://127.0.0.1:8000/be_on_road/${this.plate}/${this.date}/${this.time}`)
+                        .then(response => response.json())  // convert to JSON
+                        .then(json => this.message = json.message)    // print data to console
+                        .catch(err => console.log('Failed request', err)); // capture errors
+                }
+            },
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>

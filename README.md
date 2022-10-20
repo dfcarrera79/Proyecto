@@ -1,5 +1,5 @@
 # Proyecto
-Pico y Placa predictor
+Pico y Placa predictor developed in Python
 
 This project was developed in python with fastapi and Vue.js.
 
